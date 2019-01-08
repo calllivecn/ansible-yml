@@ -1,0 +1,9 @@
+---
+- name: deployment k8s node
+  hosts: 192.168.200.[58:61]
+  remote_user: root
+
+  roles:
+    - common
+    - docker
+    - node

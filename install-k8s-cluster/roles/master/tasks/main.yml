@@ -1,0 +1,104 @@
+---
+  - name: copy kube-apiserver
+    copy:
+      src: "{{kube_apiserver}}"
+      dest: "{{cmd_path}}/kube-apiserver"
+      mode: 0755
+      backup: yes
+
+  - name: copy kubectl
+    copy:
+      src: "{{kubectl}}"
+      dest: "{{cmd_path}}/kubectl"
+      mode: 0755
+      backup: yes
+
+  - name: copy kube-controller-manager
+    copy:
+      src: "{{kube_controller_manager}}"
+      dest: "{{cmd_path}}/kube-controller-manager"
+      mode: 0755
+      backup: yes
+
+  - name: copy kube-scheduler
+    copy:
+      src: "{{kube_scheduler}}"
+      dest: "{{cmd_path}}/kube-scheduler"
+      mode: 0755
+      backup: yes
+
+  - name: if not exists {{k8s_cfg_path}} else make
+    file:
+      path: "{{k8s_cfg_path}}"
+      state: directory
+      mode: 0755
+
+  - name: copy kube-apiserver config {{k8s_cfg_path}}
+    template:
+      src: kube-apiserver.conf.j2
+      dest: "{{k8s_cfg_path}}/kube-apiserver.conf"
+      mode: 0644
+      backup: yes
+
+  - name: copy kube-apiserver service
+    template:
+      src: kube-apiserver.service.j2
+      dest: "{{service_path}}/kube-apiserver.service"
+      mode: 0644
+      backup: yes
+  
+  - name: copy kube-controller-manager config
+    template:
+      src: kube-controller-manager.conf.j2
+      dest: "{{k8s_cfg_path}}/kube-controller-manager.conf"
+      mode: 0644
+      backup: yes
+
+  - name: copy kube-controller-manager service
+    template:
+      src: kube-controller-manager.service.j2
+      dest: "{{service_path}}/kube-controller-manager.service"
+      mode: 0644
+      backup: yes
+
+  - name: copy kube-scheduler config
+    template:
+      src: kube-scheduler.conf.j2
+      dest: "{{k8s_cfg_path}}/kube-scheduler.conf"
+      mode: 0644
+      backup: yes
+
+  - name: copy kube-scheduler service
+    template:
+      src: kube-scheduler.service.j2
+      dest: "{{service_path}}/kube-scheduler.service"
+      mode: 0644
+      backup: yes
+
+  - name: if not exists {{k8s_log_dir}} else make
+    file:
+      path: "{{k8s_log_dir}}"
+      state: directory
+      mode: 0755
+
+  - name: restart kube-apiserver
+    service:
+      name: kube-apiserver.service
+      state: restarted
+    notify:
+      - start kube-apiserver
+
+  - name: restart kube-controller-manager
+    service:
+      name: kube-controller-manager.service
+      state: restarted
+    notify:
+      - start kube-controller-manager
+
+  - name: restart kube-scheduler
+    service:
+      name: kube-scheduler.service
+      state: restarted
+    notify:
+      - start kube-scheduler
+

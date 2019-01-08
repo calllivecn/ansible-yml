@@ -1,0 +1,11 @@
+---
+- name: install docker
+  shell: wget -U 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36' -O- https://get.docker.com |sed \'s#DEFAULT_CHANNEL_VALUE="edge"#DEFAULt_CHANNEL_VAULE="stable"#\' |sh
+
+- name: restart docker.service
+  service:
+    name: docker.service
+    state: restarted
+  notify:
+    - enable docker service
+...

@@ -1,0 +1,13 @@
+[Unit]
+Description=k8s scheduler
+After=kube-apiserver.service
+Requires=kube-apiserver.service
+
+[Service]
+EnvironmentFile={{k8s_cfg_path}}/kube-scheduler.conf
+ExecStart={{cmd_path}}/kube-scheduler $KUBE_SCHEDULER_ARGS
+Restart=on-failure
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target

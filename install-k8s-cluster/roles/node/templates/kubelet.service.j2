@@ -1,0 +1,13 @@
+[Unit]
+Description=k8s kubelet server
+After=docker.service
+Requires=docker.service
+
+[Service]
+WorkingDirectory=/var/lib/kubelet
+EnvironmentFile=-{{k8s_cfg_path}}/kubelet.conf
+ExecStart={{cmd_path}}/kubelet $KUBELET_ARGS
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

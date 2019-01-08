@@ -1,0 +1,30 @@
+---
+#- name: k8s cmd path prefix and k8s log dir
+cmd_path: /usr/local/bin
+service_path: /etc/systemd/system
+
+k8s_dir: k8s
+k8s_cfg_path: /etc/k8s
+k8s_log_dir: /var/log/k8s
+
+k8s_master_ip: 192.168.57.10
+k8s_apiserver_url: "http://{{k8s_master_ip}}:8080"
+
+etcd_leader_ip: "{{ansible_default_ipv4.address}}"
+etcd_url: "http://127.0.0.1:2379"
+
+#- name: k8s source directory vars
+kube_apiserver: "{{k8s_dir}}/server/bin/kube-apiserver"
+kube_controller_manager: "{{k8s_dir}}/server/bin/kube-controller-manager"
+kube_scheduler: "{{k8s_dir}}/server/bin/kube-scheduler"
+kubectl: "{{k8s_dir}}/client/bin/kubectl"
+
+service_cluster_ip_range: 192.168.57.0/24
+
+etcd_server: 127.0.0.1
+
+#- name: define k8s node vars
+kubelet: "{{k8s_dir}}/node/bin/kubelet"
+kube_proxy: "{{k8s_dir}}/node/bin/kube-proxy"
+kubeadm: "{{k8s_dir}}/node/bin/kubeadm"
+...

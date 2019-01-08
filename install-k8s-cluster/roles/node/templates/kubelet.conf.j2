@@ -1,0 +1,5 @@
+KUBELET_ARGS="--api-servers=http://{{k8s_master_ip}}:8080 
+--hostname-override={{k8s_master_ip}} \
+--logtostderr=false \
+--log-dir={{k8s_log_dir}} \
+--v=2"

@@ -1,0 +1,15 @@
+[Unit]
+Description=k8s kube-apiserver
+After=etcd.service
+Wants=etcd.service
+
+[Service]
+Type=notify
+EnvironmentFile=-{{k8s_cfg_path}}/kube-apiserver.conf
+ExecStart={{cmd_path}}/kube-apiserver $KUBE_API_ARGS
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
+

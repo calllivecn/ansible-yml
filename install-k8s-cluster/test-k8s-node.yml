@@ -1,0 +1,8 @@
+---
+- name: install k8s nodes
+  hosts: k8s-n
+  remote_user: root
+
+  roles:
+    - common
+    - node

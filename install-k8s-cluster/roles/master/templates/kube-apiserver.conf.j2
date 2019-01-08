@@ -1,0 +1,10 @@
+KUBE_API_ARGS="--etcd-servers={{etcd_url}} \
+--bind-address=192.168.57.10 \
+--secure-port=0 \
+--advertise-address=192.168.57.10 \
+--service-cluster-ip-range={{service_cluster_ip_range}} \
+--service-node-port-range=1024-65535 \
+--enable-admission-plugins=NamespaceLifecycle,LimitRanger,SecurityContextDeny,ServiceAccount,ResourceQuota \
+--logtostderr=false \
+--log-dir={{k8s_log_dir}} \
+--v=2"
