@@ -1,0 +1,78 @@
+---
+- hosts: localhost
+  remote_user: zx
+  #sudo: yes
+
+  #gather_facts: false
+
+  vars:
+    ###########
+    # edit area begin
+    ##########
+    test: test template
+    etcd: /usr/local/bin/etcd
+    etcd_leader_ip: #&id001
+      - 1.1.1.1
+    etcd_follow_ip: #&id002
+      - 1.1.1.2
+      - 1.1.1.3
+      - 1.1.1.4
+    ###########
+    # edit area end
+    ##########
+
+    etcd_all_ip:
+       #*id001
+       #*id002
+       - "{{etcd_leader_ip}}"
+       - "{{etcd_follow_ip}}"
+       
+
+  tasks:
+  - name: echo etcd_all_ip
+    shell: echo "{{item}}.......ip={{ hostvars.{{inventory_hostname}}.ansible_ssh_host}}"
+    with_items: "{{etcd_all_ip}}"
+
+#  - name: "test var"
+#    shell: echo "test var"
+#    register: motd_contents
+#    tags: one
+#    notify:
+#      - send notify 1
+#
+#  - name: test register vars
+#    shell: echo "{{etcd}} motd contains the word hi"
+#    when: motd_contents 
+#    tags: one
+#
+#  - name: get host ip address
+#    shell: echo "this is host ip {{ansible_default_ipv4.address}}
+#        register value  {{motd_contents.stdout_lines}}"
+#    notify:
+#      - send notify 2
+#
+#  - name: test file module
+#    file:
+#      path: /tmp/not-dir-test-file/
+#      state: directory
+#      mode: 0755
+#
+#  
+#  handlers:
+#  - name: send notify 1
+#    shell: echo "执行1次handlers"
+#
+#  - name: send notify 2
+#    shell: echo "执行2次handlers"
+#
+  - name: with_items clone template
+    template:
+      src: temp2.j2
+      dest: /tmp/temp2-{{item}}.service
+    with_items: "{{etcd_all_ip}}"
+#
+#  #- service:
+#  #    name: temp1.service
+#  #    state: started
+#  #    enabled: yes
+#...

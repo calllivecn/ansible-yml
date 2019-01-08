@@ -1,0 +1,71 @@
+---
+{% if item == etcd_leader_ip %}
+ 
+name: etcd-{{etcd_leader_ip}}
+data-dir: /var/lib/etcd
+
+listen-client-urls: http://127.0.0.1:2379
+	http://{{etcd_leader_ip}}:2379
+  
+advertise-client-urls: http://127.0.0.1:2379
+	http://{{etcd_leader_ip}}:2379
+
+listen-peer-urls: http://{{etcd_leader_ip}}:2380
+
+initial-advertise-peer-urls: http://{{etcd_leader_ip}}:2380
+
+initial-cluster: 
+{% for hosts in etcd_all_ip %}
+{% for host in hosts %}
+	http://{{host}}:2380
+{% endfor %}
+{% endfor %}
+
+initial-cluster-token: etcd-cluster-token
+initial-cluster-state: new
+
+{% else %}
+
+name: etcd-{{item}}
+data-dir: /var/lib/etcd
+
+listen-client-urls: http://127.0.0.1:2379
+	http://{{item}}:2379
+
+advertise-client-urls: http://127.0.0.1:2379
+	http://{{item}}:2379
+
+listen-peer-urls: http://{{item}}:2380
+
+initial-advertise-peer-urls: http://{{item}}:2380
+
+initial-cluster:
+{% for hosts in etcd_all_ip %}
+{% for host in hosts %}
+	http://{{host}}:2380
+{% endfor %}
+{% endfor %}
+
+initial-cluster-token: etcd-cluster-token
+initial-cluster-state: exist
+
+{% endif %}
+...
+
+
+### test area
+
+test begin
+
+{% if item == etcd_leader_ip %}
+
+ leader is {{item}}
+
+{% else %}
+
+ follow is {{item}}
+
+{% endif %}
+
+test end
+

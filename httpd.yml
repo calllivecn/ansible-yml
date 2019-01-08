@@ -1,0 +1,14 @@
+---
+- hosts: 192.168.200.57
+  remote_user: root
+
+  tasks:
+    - name: install httpd
+      yum: name=httpd state=installed
+
+      notify:
+        - restart httpd
+
+  handlers:
+    - name: restart httpd
+      service: name=httpd state=started enabled=yes
