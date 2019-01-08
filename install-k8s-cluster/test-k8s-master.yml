@@ -1,0 +1,12 @@
+---
+
+- name: install k8s master
+  hosts: k8s-m
+  remote_user: root
+
+
+  vars_files:
+    - vars_file.yml
+  roles:
+    - master
+

@@ -1,0 +1,31 @@
+---
+- name: instal etcd
+  hosts: k8s
+
+  vars:
+    etcd_leader_ip: 192.168.57.10
+
+    #etcd_interface: "{{ansible_enp0s8.ipv4.address}}"
+
+    etcd_cluster_urls: http://192.168.57.10:2380, http://192.168.57.21:2380, http://192.168.57.22:2380
+
+  vars_files:
+    - vars_file.yml
+
+  roles:
+    - etcd
+...
+#    tasks:
+#      - name: config etcd leader
+#        template:
+#          src: roles/etcd/templates/etcd-leader-conf.yml.j2
+#          dest: /etc/etcd/etcd-conf.yml
+#          mode: 0644
+#        when: etcd_interface == etcd_leader_ip
+#
+#      - name: config etcd follow
+#        template:
+#          src: roles/etcd/templates/etcd-follow-conf.yml.j2
+#          dest: /etc/etcd/etcd-conf.yml
+#          mode: 0644
+#        when: etcd_interface != etcd_leader_ip

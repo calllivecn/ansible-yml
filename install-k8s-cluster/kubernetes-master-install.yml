@@ -1,0 +1,16 @@
+---
+#- hosts: kubernetes
+- name: deployment k8s master node
+  hosts: 192.168.200.57
+  remote_user: root
+
+- name: install etcd
+  roles:
+    - etcd
+
+- name: install master
+  roles:
+    - common
+    - master
+
+...

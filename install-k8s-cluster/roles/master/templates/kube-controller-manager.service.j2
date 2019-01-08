@@ -1,0 +1,15 @@
+[Unit]
+Description=k8s Controller Manager
+Documentation=https://github.com/GoolgeCloudPlatfrom/kubernetes
+After=kube-apiserver.service
+Requires=kube-apiserver.service
+
+[Service]
+EnvironmentFile={{k8s_cfg_path}}/kube-controller-manager.conf
+ExecStart={{cmd_path}}/kube-controller-manager $KUBE_CONTROLLER_MANAGER_ARGS
+Restart=on-failure
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target
+
