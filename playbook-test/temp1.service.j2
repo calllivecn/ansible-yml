@@ -1,0 +1,12 @@
+[Unit]
+description=test ansible-playbook
+#after=network.target
+
+[Service]
+Type=simple
+EnvironmentFile=-/etc/etcd/etcd.conf
+ExecStart=/bin/sh -c 'echo test ansible-playbook service module > /tmp/ansible-playbook'
+
+[Install]
+WantedBy=multi-user.target
+

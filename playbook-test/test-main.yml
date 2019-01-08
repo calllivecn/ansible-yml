@@ -1,0 +1,11 @@
+---
+- name: 学习ansible roles
+  hosts: localhost
+  remote_user: zx
+  
+  roles:
+    - test
+  
+  tasks:
+  - name: echo ....
+    shell: echo 学习ansible roles

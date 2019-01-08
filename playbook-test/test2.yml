@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  remote_user: zx
+
+  vars:
+    SRC: /home/zx/文档/
+    DEST: /tmp/
+
+  tasks:
+    - name: copy SRC to DEST
+      copy:
+        src: "{{SRC}}"
+        dest: "{{DEST}}"
+        warn: False
+
