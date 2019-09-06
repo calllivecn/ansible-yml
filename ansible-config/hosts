@@ -1,2 +1,2 @@
 [self]
-localhost:22	ansible_ssh_user=zx
+localhost:22	ansible_ssh_user=zx ansible_ssh_pass=password
