@@ -1,0 +1,38 @@
+---
+# 这样测试可以了
+- hosts: "{{ ip }}"
+  remote_user: "{{ user }}"
+  become: yes
+  become_method: sudo
+
+  tasks:
+    - name: download docker-ce apt-key
+      shell: curl -sL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | apt-key add -
+
+    - name: add docker apt repository
+      apt_repository:
+        filename: docker-ce
+        repo: deb [arch=amd64]  https://mirrors.aliyun.com/docker-ce/linux/ubuntu {{ ansible_lsb.codename }} stable
+        state: present
+        update_cache: yes
+
+    - name: apt install docker-ce
+      apt:
+        name: docker-ce
+
+      notify:
+        enable docker.service
+    
+    - name: "{{ user }} user add docker group"
+      user:
+        user: "{{ user }}"
+        groups: docker
+        append: yes
+
+  handlers:
+    - name: enable docker.service
+      systemd:
+        name: docker.service
+        state: started
+        enabled: yes
+
