@@ -12,10 +12,10 @@ else
 fi
 
 
-ansible_cfg="$HOME/.ansible-cfg"
-if [ -d $ansible_cfg ];then
-	echo "$ansible_cfg directory already exists."
+ansible_dir="$HOME/.ansible"
+if [ -d $ansible_dir ];then
+	echo "$ansible_dir directory already exists."
 else
-	mkdir -v "$ansible_cfg"
-	install -v -m644 hosts $ansible_cfg/
+	mkdir -v "$ansible_dir"
+	install -v -m644 hosts $ansible_dir/
 fi
