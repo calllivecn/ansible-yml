@@ -1,6 +1,6 @@
 #!/bin/bash
 # date 2019-09-06 10:20:38
-# author calllivecn <c-all@qq.com>
+# author calllivecn <calllivecn@outlook.com>
 
 
 
